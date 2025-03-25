@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fading and Scrolling Credits</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: black;
+            color: #ffcc00; /* Amber color */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+        }
+
+        .intro-container {
+            position: absolute;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeInOut 2s ease-in-out forwards;
+        }
+
+        .intro-name {
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .intro-subtitle {
+            font-size: 1.5em;
+            font-style: italic;
+            margin-top: 10px;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .credits-container {
+            position: absolute;
+            bottom: -100%;
+            width: 100%;
+            display: none;
+            animation: scrollUp 20s linear forwards;
+        }
+
+        .credit {
+            margin-bottom: 40px;
+        }
+
+        .name {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            font-style: italic;
+        }
+
+        @keyframes scrollUp {
+            from {
+                transform: translateY(100%);
+            }
+            to {
+                transform: translateY(-100%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro" class="intro-container">
+        <div id="intro-name" class="intro-name"></div>
+        <div id="intro-subtitle" class="intro-subtitle"></div>
+    </div>
+    <div id="credits" class="credits-container"></div>
+
+    <script>
+        const credits = [
+            { name: "Luke Skywalker", accomplishment: "Jedi Knight" },
+            { name: "Leia Organa", accomplishment: "Princess of Alderaan" },
+            { name: "Han Solo", accomplishment: "Captain of the Millennium Falcon" },
+            { name: "Darth Vader", accomplishment: "Dark Lord of the Sith" },
+            { name: "Obi-Wan Kenobi", accomplishment: "Jedi Master" },
+            { name: "Yoda", accomplishment: "Grand Master of the Jedi Order" },
+            { name: "Boba Fett", accomplishment: "Bounty Hunter" },
+            { name: "Emperor Palpatine", accomplishment: "Sith Lord & Emperor" }
+        ];
+
+        function showIntro(index = 0) {
+            if (index >= credits.length) {
+                document.getElementById("intro").style.display = "none";
+                document.getElementById("credits").style.display = "block";
+                document.getElementById("credits").style.animation = "scrollUp 20s linear forwards";
+                createCredits();
+                return;
+            }
+            
+            const introName = document.getElementById("intro-name");
+            const introSubtitle = document.getElementById("intro-subtitle");
+            introName.textContent = credits[index].name;
+            introSubtitle.textContent = credits[index].accomplishment;
+            
+            document.getElementById("intro").style.animation = "none";
+            void document.getElementById("intro").offsetWidth;
+            document.getElementById("intro").style.animation = "fadeInOut 2s ease-in-out forwards";
+            
+            setTimeout(() => showIntro(index + 1), 2500);
+        }
+
+        function createCredits() {
+            const container = document.getElementById("credits");
+            credits.forEach(person => {
+                const creditDiv = document.createElement("div");
+                creditDiv.classList.add("credit");
+
+                const nameElement = document.createElement("div");
+                nameElement.classList.add("name");
+                nameElement.textContent = person.name;
+
+                const subtitleElement = document.createElement("div");
+                subtitleElement.classList.add("subtitle");
+                subtitleElement.textContent = person.accomplishment;
+
+                creditDiv.appendChild(nameElement);
+                creditDiv.appendChild(subtitleElement);
+                container.appendChild(creditDiv);
+            });
+        }
+
+        showIntro();
+    </script>
+</body>
+</html>
