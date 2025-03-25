@@ -35,6 +35,10 @@
             font-size: 1.5em;
             font-style: italic;
             margin-top: 10px;
+            max-width: 60%;
+            text-align: center;
+            white-space: normal;
+            line-height: 1.4;
         }
 
         @keyframes fadeInOut {
@@ -63,6 +67,10 @@
         .subtitle {
             font-size: 1.2em;
             font-style: italic;
+            max-width: 60%;
+            text-align: center;
+            white-space: normal;
+            line-height: 1.4;
         }
 
         @keyframes scrollUp {
@@ -85,14 +93,14 @@
 
     <script>
         const credits = [
-            { name: "Luke Skywalker", accomplishment: "Jedi Knight" },
-            { name: "Leia Organa", accomplishment: "Princess of Alderaan" },
-            { name: "Han Solo", accomplishment: "Captain of the Millennium Falcon" },
-            { name: "Darth Vader", accomplishment: "Dark Lord of the Sith" },
-            { name: "Obi-Wan Kenobi", accomplishment: "Jedi Master" },
-            { name: "Yoda", accomplishment: "Grand Master of the Jedi Order" },
-            { name: "Boba Fett", accomplishment: "Bounty Hunter" },
-            { name: "Emperor Palpatine", accomplishment: "Sith Lord & Emperor" }
+            { name: "Luke Skywalker", accomplishment: "Jedi Knight\nHero of the Rebellion" },
+            { name: "Leia Organa", accomplishment: "Princess of Alderaan\nLeader of the Resistance" },
+            { name: "Han Solo", accomplishment: "Captain of the Millennium Falcon\nScoundrel with a Heart of Gold" },
+            { name: "Darth Vader", accomplishment: "Dark Lord of the Sith\nEnforcer of the Empire" },
+            { name: "Obi-Wan Kenobi", accomplishment: "Jedi Master\nMentor to the Chosen One" },
+            { name: "Yoda", accomplishment: "Grand Master of the Jedi Order\n900 Years of Wisdom" },
+            { name: "Boba Fett", accomplishment: "Bounty Hunter\nFeared Across the Galaxy" },
+            { name: "Emperor Palpatine", accomplishment: "Sith Lord & Emperor\nMastermind of the Galactic Empire" }
         ];
 
         function showIntro(index = 0) {
@@ -107,7 +115,7 @@
             const introName = document.getElementById("intro-name");
             const introSubtitle = document.getElementById("intro-subtitle");
             introName.textContent = credits[index].name;
-            introSubtitle.textContent = credits[index].accomplishment;
+            introSubtitle.innerHTML = credits[index].accomplishment.replace(/\n/g, "<br>"); // Allow line breaks
             
             document.getElementById("intro").style.animation = "none";
             void document.getElementById("intro").offsetWidth;
@@ -128,7 +136,7 @@
 
                 const subtitleElement = document.createElement("div");
                 subtitleElement.classList.add("subtitle");
-                subtitleElement.textContent = person.accomplishment;
+                subtitleElement.innerHTML = person.accomplishment.replace(/\n/g, "<br>"); // Allow line breaks
 
                 creditDiv.appendChild(nameElement);
                 creditDiv.appendChild(subtitleElement);
